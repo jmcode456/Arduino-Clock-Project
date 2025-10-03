@@ -1,6 +1,6 @@
 /*
 - Clock Display Arduino Program
-- By Jakub Maternik
+- By Jakub M
 - 03/10/2025
 - Version: 1.
 */ 
