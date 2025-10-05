@@ -67,12 +67,12 @@ void setup() {
   lightmeter.begin();
 
   //Pins
-  pinMode(pin_CLK, INPUT);
-  pinMode(pin_DT, INPUT);
-  pinMode(pin_btn, INPUT_PULLUP);
-  pinMode(pin_CLK2, INPUT);
-  pinMode(pin_DT2, INPUT);
-  pinMode(pin_btn2, INPUT_PULLUP);
+  pinMode(PIN_CLK, INPUT);
+  pinMode(PIN_DT, INPUT);
+  pinMode(PIN_BTN, INPUT_PULLUP);
+  pinMode(PIN_CLK2, INPUT);
+  pinMode(PIN_DT2, INPUT);
+  pinMode(PIN_BTN2, INPUT_PULLUP);
 
   // LED arrays
   FastLED.addLeds<WS2812, PIN_10, GRB>(leds1, NUM_LEDS);
@@ -95,8 +95,8 @@ void setup() {
   last_state_CLK = digitalRead(pin_CLK);
 
   // Call updateEncoder() when a change is seen on CLK pin
-  attachInterrupt(digitalPinToInterrupt(pin_CLK), updateEncoderBright, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(pin_CLK2), updateEncoderHue, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(PIN_CLK), updateEncoderBright, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(PIN_CLK2), updateEncoderHue, CHANGE);
 }
 
 //==================================================================================
@@ -105,8 +105,8 @@ void setup() {
 void loop() {
   unsigned long current_millis = millis();
 
-  int btnState = digitalRead(pin_btn);
-  int btnState2 = digitalRead(pin_btn2);
+  int btnState = digitalRead(PIN_BTN);
+  int btnState2 = digitalRead(PIN_BTN2);
 
   //If we detect LOW signal, button is pressed
   if (btnState == LOW) {
@@ -209,10 +209,10 @@ void loop() {
 // =========================================================
 void updateEncoderBright() {
   if (bright_manual == true){
-  current_state_CLK = digitalRead(pin_CLK);
+  current_state_CLK = digitalRead(PIN_CLK);
 
   if (current_state_CLK != last_state_CLK && current_state_CLK == 1) {
-    if (digitalRead(pin_DT) != current_state_CLK) {
+    if (digitalRead(PIN_DT) != current_state_CLK) {
         bright_plus();
     } else {
         bright_minus();
@@ -225,14 +225,14 @@ void updateEncoderBright() {
 
 void updateEncoderHue() {
   // Read the current state of CLK
-  current_state_CLK2 = digitalRead(pin_CLK2);
+  current_state_CLK2 = digitalRead(PIN_CLK2);
 
   // If last and current state of CLK are different, then pulse occurred
   // React to only 1 state change to avoid double count
   if (current_state_CLK2 != last_state_CLK2 && current_state_CLK2 == 1) {
     // If the DT state is different than the CLK state then
     // the encoder is rotating CCW so decrement
-    if (digitalRead(pin_DT2) != current_state_CLK2) {
+    if (digitalRead(PIN_DT2) != current_state_CLK2) {
         hue_plus();
     } else {
       // Encoder is rotating CW so increment
